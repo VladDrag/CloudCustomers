@@ -19,6 +19,25 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.18.2" />
+    <PackageReference Include="FluentAssertions" Version="6.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Systems\" />
+    <None Remove="Helpers\" />
+    <None Remove="Fixtures\" />
+    <None Remove="Moq" />
+    <None Remove="FluentAssertions" />
+    <None Remove="Systems\Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Systems\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Fixtures\" />
+    <Folder Include="Systems\Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CloudCustomers.API\CloudCustomers.API.csproj" />
+  </ItemGroup>
 </Project>
