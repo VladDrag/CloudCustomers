@@ -1,6 +1,7 @@
 ﻿using CloudCustomers.API.Controllers;
 using CloudCustomers.API.Models;
 using CloudCustomers.API.Services;
+using CloudCustomers.UnitTests.Fixtures;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -14,7 +15,10 @@ public class TestUsersController
     public async Task Get_On_Success_Returns_Code_200()
     {
         //Arrange
-        var mockUserService = new Mock<IUsersService>();
+		var mockUserService = new Mock<IUsersService>();
+		mockUserService
+			.Setup(service => service.GetAllUsers())
+			.ReturnsAsync(UserFixtures.GetTestUsers());
         var usersController = new UsersController(mockUserService.Object);
 
         //Act
@@ -32,7 +36,7 @@ public class TestUsersController
 		var mockUserService = new Mock<IUsersService>();
 		mockUserService
 			.Setup(service => service.GetAllUsers())
-			.ReturnsAsync(new List<User>());
+			.ReturnsAsync(UserFixtures.GetTestUsers());
 		
         var usersController = new UsersController(mockUserService.Object);
 
@@ -42,6 +46,39 @@ public class TestUsersController
 		//Assert
 		mockUserService.Verify(service => service.GetAllUsers(), Times.Once);
 	}
-	
-	
+
+	[Fact]
+	public async Task Get_On_Success_Returns_UsersList()
+	{
+		//Arrange
+		var mockUserService = new Mock<IUsersService>();
+		mockUserService.Setup(service => service.GetAllUsers())
+			.ReturnsAsync(UserFixtures.GetTestUsers());
+		
+		var usersController = new UsersController(mockUserService.Object);
+
+		//Act
+		var result = (OkObjectResult) await usersController.Get();
+		
+		//Assert
+
+		result.Value.Should().BeOfType<List<User>>();
+	}
+
+	[Fact]
+	public async Task Get_On_NoUsers_Found_Returns_404()
+	{
+		//Arrange
+		var mockUserService = new Mock<IUsersService>();
+		mockUserService.Setup(service => service.GetAllUsers())
+			.ReturnsAsync(new List<User>()); //add empty User List
+		
+		var usersController = new UsersController(mockUserService.Object);
+
+		//Act
+		var result = (NotFoundResult) await usersController.Get();
+		
+		//Assert
+		result.StatusCode.Should().Be(404);
+	}
 }
