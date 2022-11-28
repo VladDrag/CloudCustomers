@@ -1,4 +1,6 @@
 ﻿using CloudCustomers.API.Services;
+using Microsoft.Extensions.DependencyInjection;
+using UsersApi.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,8 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services)
 {
+	services.Configure<UsersApiOptions>(builder.Configuration.GetSection("UsersApiOptions"));
+
 	services.AddTransient<IUsersService, UsersService>();
 	services.AddHttpClient<IUsersService, UsersService>();
 }
