@@ -18,7 +18,7 @@ public class TestUsersController
 		var mockUserService = new Mock<IUsersService>();
 		mockUserService
 			.Setup(service => service.GetAllUsers())
-			.ReturnsAsync(UserFixtures.GetTestUsers());
+			.ReturnsAsync(UsersFixture.GetTestUsers());
         var usersController = new UsersController(mockUserService.Object);
 
         //Act
@@ -36,7 +36,7 @@ public class TestUsersController
 		var mockUserService = new Mock<IUsersService>();
 		mockUserService
 			.Setup(service => service.GetAllUsers())
-			.ReturnsAsync(UserFixtures.GetTestUsers());
+			.ReturnsAsync(UsersFixture.GetTestUsers());
 		
         var usersController = new UsersController(mockUserService.Object);
 
@@ -53,7 +53,7 @@ public class TestUsersController
 		//Arrange
 		var mockUserService = new Mock<IUsersService>();
 		mockUserService.Setup(service => service.GetAllUsers())
-			.ReturnsAsync(UserFixtures.GetTestUsers());
+			.ReturnsAsync(UsersFixture.GetTestUsers());
 		
 		var usersController = new UsersController(mockUserService.Object);
 

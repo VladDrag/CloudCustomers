@@ -2,7 +2,7 @@ using CloudCustomers.API.Models;
 
 namespace CloudCustomers.UnitTests.Fixtures
 {
-	public static class UserFixtures
+	public static class UsersFixture
 	{
 		public static List<User> GetTestUsers() {
 			return new() {
